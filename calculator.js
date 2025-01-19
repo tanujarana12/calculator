@@ -1,8 +1,15 @@
 // click event capture of button
 //          digit button , action button
 
+//Get HTML Elements
+const displayResult = document.getElementById('displayInput');
+const allCalculatorButtons = document.getElementsByClassName('clickButton');
+const buttonArrayLength = allCalculatorButtons.length
 
-
+//Define Variables
+let performAction;
+let firstValue;
+let secondValue = "";
 
 // calculation functions
 let addition = function (a, b) {
@@ -50,23 +57,11 @@ let evaluateResult = function () {
         result = division(firstValue, secondValue);
     }
     displayResult.value = result;
+    performAction = null;
+    secondValue = '';
+    firstValue = displayResult.value;
     return;
 }
-
-
-const displayResult = document.getElementById('displayInput');
-// displayResult.addEventListener("click", display)
-
-const allCalculatorButtons = document.getElementsByClassName('clickButton');
-const buttonArrayLength = allCalculatorButtons.length
-
-// const allClearButton = document.getElementById('clearButton');
-// console.log("ok" , allClearButton);
-// allClearButton.addEventListener("click", function() {
-//     displayResult.value= '';
-// })
-
-
 
 document.addEventListener('keydown', function (event) {
     console.log(event);
@@ -74,20 +69,13 @@ document.addEventListener('keydown', function (event) {
         resetCalculator();
     }
         
-    else if (event.key === "Enter") {
+    else if (event.key === "r") {
         console.log("keyboard event function call");
             evaluateResult();
         }
     }
 )
-// document.addEventListener('keydown', function (evaluate) {
 
-// })
-
-
-let performAction;
-let firstValue;
-let secondValue = "";
 for (let i = 0; i < buttonArrayLength; i++) {
     allCalculatorButtons[i].addEventListener("click", function () {
         console.log("buttoneventfunctioncall");
@@ -129,12 +117,9 @@ for (let i = 0; i < buttonArrayLength; i++) {
             evaluateResult();
             return;
         }
-
-
+        
         let concatenatedResult = previousValue + currentValue;
         displayResult.value = concatenatedResult;
-
-
     });
 }
 
