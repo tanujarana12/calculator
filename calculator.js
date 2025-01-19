@@ -8,9 +8,6 @@
 let addition = function (a, b) {
     let c;
     c = Number(a) + Number(b);
-    console.log("a", a)
-    console.log("b", b)
-    console.log("c", c)
     return c;
 }
 
@@ -37,7 +34,21 @@ const displayResult = document.getElementById('displayInput');
 const allCalculatorButtons = document.getElementsByClassName('clickButton');
 const buttonArrayLength = allCalculatorButtons.length
 
+// const allClearButton = document.getElementById('clearButton');
+// console.log("ok" , allClearButton);
+// allClearButton.addEventListener("click", function() {
+//     displayResult.value= '';
+// })
 
+document.addEventListener('keydown', function (event) {
+    console.log(event)
+    if (event.key === 'c') {
+        performAction = null;
+        firstValue = '';
+        secondValue = '';
+        displayResult.value = '';
+    }
+})
 
 let performAction
 let firstValue
@@ -47,9 +58,10 @@ for (let i = 0; i < buttonArrayLength; i++) {
         console.log("click");
         let previousValue = displayResult.value;
         let currentValue = allCalculatorButtons[i].textContent;
-        if ((performAction !== null) && (performAction !== undefined) && (currentValue !== "=")) {
-            console.log("secondValue", secondValue)
-            console.log("current", currentValue)
+        // if ((performAction !== null) && (performAction !== undefined) && (currentValue !== "=")) {
+        //     secondValue = secondValue + currentValue
+        // }
+        if ((performAction && currentValue !== "=")) {
             secondValue = secondValue + currentValue
         }
 
@@ -71,6 +83,16 @@ for (let i = 0; i < buttonArrayLength; i++) {
             firstValue = displayResult.value;
         }
 
+        else if (currentValue === "AC") {
+            // performAction = "AC";
+            // reset the variables
+            performAction = null;
+            firstValue = '';
+            secondValue = '';
+            displayResult.value = '';
+            return;
+        }
+
         else if (currentValue === "=") {
             let result;
             if (performAction === "+") {
@@ -85,11 +107,15 @@ for (let i = 0; i < buttonArrayLength; i++) {
             else if (performAction === "/") {
                 result = division(firstValue, secondValue);
             }
+
+
             displayResult.value = result;
             return;
         }
+
         let concatenatedResult = previousValue + currentValue;
         displayResult.value = concatenatedResult;
+
 
     });
 }
