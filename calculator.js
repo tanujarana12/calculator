@@ -40,19 +40,23 @@ const buttonArrayLength = allCalculatorButtons.length
 //     displayResult.value= '';
 // })
 
+let resetCalculator = function () {
+    performAction = null;
+    firstValue = '';
+    secondValue = '';
+    displayResult.value = '';
+}
+
 document.addEventListener('keydown', function (event) {
-    console.log(event)
+    console.log(event);
     if (event.key === 'c') {
-        performAction = null;
-        firstValue = '';
-        secondValue = '';
-        displayResult.value = '';
+        resetCalculator();
     }
 })
 
-let performAction
-let firstValue
-let secondValue = ""
+let performAction;
+let firstValue;
+let secondValue = "";
 for (let i = 0; i < buttonArrayLength; i++) {
     allCalculatorButtons[i].addEventListener("click", function () {
         console.log("click");
@@ -86,10 +90,7 @@ for (let i = 0; i < buttonArrayLength; i++) {
         else if (currentValue === "AC") {
             // performAction = "AC";
             // reset the variables
-            performAction = null;
-            firstValue = '';
-            secondValue = '';
-            displayResult.value = '';
+            resetCalculator();
             return;
         }
 
