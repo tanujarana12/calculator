@@ -28,6 +28,32 @@ let division = function (a, b) {
     return c;
 }
 
+let resetCalculator = function () {
+    performAction = null;
+    firstValue = '';
+    secondValue = '';
+    displayResult.value = '';
+}
+
+let evaluateResult = function () {
+    let result;
+    if (performAction === "+") {
+        result = addition(firstValue, secondValue);
+    }
+    else if (performAction === "-") {
+        result = substraction(firstValue, secondValue);
+    }
+    else if (performAction === "*") {
+        result = multiply(firstValue, secondValue);
+    }
+    else if (performAction === "/") {
+        result = division(firstValue, secondValue);
+    }
+    displayResult.value = result;
+    return;
+}
+
+
 const displayResult = document.getElementById('displayInput');
 // displayResult.addEventListener("click", display)
 
@@ -40,26 +66,31 @@ const buttonArrayLength = allCalculatorButtons.length
 //     displayResult.value= '';
 // })
 
-let resetCalculator = function () {
-    performAction = null;
-    firstValue = '';
-    secondValue = '';
-    displayResult.value = '';
-}
+
 
 document.addEventListener('keydown', function (event) {
     console.log(event);
     if (event.key === 'c') {
         resetCalculator();
     }
-})
+        
+    else if (event.key === "Enter") {
+        console.log("keyboard event function call");
+            evaluateResult();
+        }
+    }
+)
+// document.addEventListener('keydown', function (evaluate) {
+
+// })
+
 
 let performAction;
 let firstValue;
 let secondValue = "";
 for (let i = 0; i < buttonArrayLength; i++) {
     allCalculatorButtons[i].addEventListener("click", function () {
-        console.log("click");
+        console.log("buttoneventfunctioncall");
         let previousValue = displayResult.value;
         let currentValue = allCalculatorButtons[i].textContent;
         // if ((performAction !== null) && (performAction !== undefined) && (currentValue !== "=")) {
@@ -95,24 +126,10 @@ for (let i = 0; i < buttonArrayLength; i++) {
         }
 
         else if (currentValue === "=") {
-            let result;
-            if (performAction === "+") {
-                result = addition(firstValue, secondValue);
-            }
-            else if (performAction === "-") {
-                result = substraction(firstValue, secondValue);
-            }
-            else if (performAction === "*") {
-                result = multiply(firstValue, secondValue);
-            }
-            else if (performAction === "/") {
-                result = division(firstValue, secondValue);
-            }
-
-
-            displayResult.value = result;
+            evaluateResult();
             return;
         }
+
 
         let concatenatedResult = previousValue + currentValue;
         displayResult.value = concatenatedResult;
