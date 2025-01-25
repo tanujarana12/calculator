@@ -145,6 +145,12 @@ for (let i = 0; i < buttonArrayLength; i++) {
         if (currentValue !== "=") {
             lastResult = null;
         }
+    if ((performAction !== null) && (firstValue !=='' ) && (secondValue!=='') && (currentValue!=='=') && 
+    ((currentValue==='+') ||(currentValue==='-') || (currentValue==='*') || (currentValue==='/') || (currentValue==='%'))) {
+            alert("Please evalute previous result first using '=' or key 'r' ");
+            currentValue='';
+        }
+
         if ((performAction && currentValue !== "=")) {
             secondValue = secondValue + currentValue
         }
