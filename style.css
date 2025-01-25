@@ -28,6 +28,10 @@ body {
     padding:6px;
 }
 
+.resultBorder {
+    border: 5px solid green;
+}
+
 #displayInput{
 height: 30px;
 font-size: 25px;
