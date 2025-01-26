@@ -158,10 +158,20 @@ for (let i = 0; i < buttonArrayLength; i++) {
         //     performAction =" " ;
         // }
        
+        if ((currentValue ==="0") && (previousValue ==='0') || (currentValue === '00') && (previousValue !== "0+")){
+            console.log('this is 0')
+            displayResult.value = Number(previousValue) - Number(currentValue)
+            console.log('1',Number(previousValue))
+            console.log('2',Number(currentValue))
+            console.log('displayresult' , displayResult.value)
+            return;
+        }
+        
 
         if (currentValue === "+") {
             performAction = "+";
             firstValue = displayResult.value;
+            (console.log('firstvalue'), firstValue)
         }
 
         else if (currentValue === "-") {
