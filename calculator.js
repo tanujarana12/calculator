@@ -24,13 +24,14 @@ let performAction;
 let firstValue;
 let secondValue = "";
 let lastResult = null;
+let performActionSymbols = ['+', '-', '*', '/', '%']
 
 
 // calculation functions
 let addition = function (a, b) {
     let c;
     c = Number(a) + Number(b);
-    console.log("a,b,c" , a,b,c);
+    console.log("a,b,c", a, b, c);
     return c;
 }
 
@@ -51,12 +52,11 @@ let division = function (a, b) {
     return c;
 }
 
-let percentage = function (a,b){
+let percentage = function (a, b) {
     let c;
-    c = (a/100)*b;
+    c = (a / 100) * b;
     return c;
 }
-
 // if (currentValue === "=") {
 //     evaluateResult();
 //     borderColor();
@@ -71,44 +71,53 @@ let resetCalculator = function () {
 
 let borderColor = function () {
     displayInput.classList.add('resultBorder');
- }
+}
 
- function resetBorder() {
+function resetBorder() {
     displayInput.classList.remove('resultBorder');
+}
+
+let isValueExist = function (arr, toFind) {
+    let isExist = false;
+    for (i = 0; i < arr.length; i++) {
+        if (arr[i] === toFind) {
+            isExist = true;
+        }
+    }
+    return isExist;
 }
 
 let evaluateResult = function () {
     let result;
     // let lastResult;
-    
+
     if (lastResult !== null) {
         result = lastResult;
         // return;
     }
     else {
-         if (performAction === "+") {
-        result = addition(firstValue, secondValue);
-         }
-         else if (performAction === "-") {
-        result = substraction(firstValue, secondValue);
-         }
-         else if (performAction === "*") {
-        result = multiply(firstValue, secondValue);
-         }
-         else if (performAction === "/") {
-        result = division(firstValue, secondValue);
-
-         }
-         else if (performAction === "%") {
-        result = percentage(firstValue, secondValue) ;
-          }
-          }
+        if (performAction === "+") {
+            result = addition(firstValue, secondValue);
+        }
+        else if (performAction === "-") {
+            result = substraction(firstValue, secondValue);
+        }
+        else if (performAction === "*") {
+            result = multiply(firstValue, secondValue);
+        }
+        else if (performAction === "/") {
+            result = division(firstValue, secondValue);
+        }
+        else if (performAction === "%") {
+            result = percentage(firstValue, secondValue);
+        }
+    }
 
     displayResult.value = result;
     performAction = null;
     secondValue = '';
     firstValue = displayResult.value;
-    lastResult = result; 
+    lastResult = result;
     return;
 }
 
@@ -118,37 +127,38 @@ document.addEventListener('keydown', function (event) {
         resetCalculator();
         resetBorder();
     }
-        
+
     else if (event.key === "r") {
         console.log("keyboard event function call");
-            evaluateResult();
-            borderColor();
-        }
+        evaluateResult();
+        borderColor();
+    }
     else {
         event.preventDefault(); //built in JS function to prevent not to perform the default action
-    } 
     }
+}
 )
 
 for (let i = 0; i < buttonArrayLength; i++) {
-    resetBorder(); 
+    resetBorder();
     allCalculatorButtons[i].addEventListener("click", function () {
         resetBorder();
         console.log("buttoneventfunctioncall");
         let previousValue = displayResult.value;
         console.log("previousvalue", previousValue);
         let currentValue = allCalculatorButtons[i].textContent;
-        console.log("currentValue", currentValue );
+        console.log("currentValue", currentValue);
         // if ((performAction !== null) && (performAction !== undefined) && (currentValue !== "=")) {
         //     secondValue = secondValue + currentValue
         // }
         if (currentValue !== "=") {
             lastResult = null;
         }
-    if ((performAction !== null) && (firstValue !=='' ) && (secondValue!=='') && (currentValue!=='=') && 
-    ((currentValue==='+') ||(currentValue==='-') || (currentValue==='*') || (currentValue==='/') || (currentValue==='%'))) {
+        if ((performAction !== null) && (firstValue !== '') && (secondValue !== '') && (currentValue !== '=') &&
+            (isValueExist(performActionSymbols, currentValue))) {
+            // ((currentValue==='+') ||(currentValue==='-') || (currentValue==='*') || (currentValue==='/') || (currentValue==='%'))) {
             alert("Please evalute previous result first using '=' or key 'r' ");
-            currentValue='';
+            currentValue = '';
         }
 
         if ((performAction && currentValue !== "=")) {
@@ -157,47 +167,37 @@ for (let i = 0; i < buttonArrayLength; i++) {
         // if (currentValue==="+" && performAction==="+"){
         //     performAction =" " ;
         // }
-       
-        if ((currentValue ==="0") && (previousValue ==='0') || (currentValue === '00') && (previousValue !== "0+")){
+
+        if ((currentValue === "0") && (previousValue === '0') || (currentValue === '00') && (previousValue !== "0+")) {
             console.log('this is 0')
             displayResult.value = Number(previousValue) - Number(currentValue)
-            console.log('1',Number(previousValue))
-            console.log('2',Number(currentValue))
-            console.log('displayresult' , displayResult.value)
+            console.log('1', Number(previousValue))
+            console.log('2', Number(currentValue))
+            console.log('displayresult', displayResult.value)
             return;
         }
-        
-
-        if (currentValue === "+") {
-            performAction = "+";
-            firstValue = displayResult.value;
-            (console.log('firstvalue'), firstValue)
-        }
-
-        else if (currentValue === "-") {
-            performAction = "-";
+        ////Refactoring  
+        if (isValueExist(performActionSymbols, currentValue)) {
+            performAction = currentValue;
             firstValue = displayResult.value;
         }
-        else if (currentValue === "*") { 
-            performAction = "*";
-            firstValue = displayResult.value;
-        }
-        else if (currentValue === "/") {
-            performAction = "/";
-            firstValue = displayResult.value;
-        }
-        else if (currentValue === "/") {  
-            performAction = "/";
-            firstValue = displayResult.value;
-        }
-        else if (currentValue === "%") {  
-            performAction = "%";
-            firstValue = displayResult.value;
-        }
-
+        // else if (currentValue === "-") {
+        //     performAction = "-";
+        //     firstValue = displayResult.value;
+        // }
+        // else if (currentValue === "*") { 
+        //     performAction = "*";
+        //     firstValue = displayResult.value;
+        // }
+        // else if (currentValue === "/") {  
+        //     performAction = "/";
+        //     firstValue = displayResult.value;
+        // }
+        // else if (currentValue === "%") {  
+        //     performAction = "%";
+        //     firstValue = displayResult.value;
+        // }
         else if (currentValue === "AC") {
-            // performAction = "AC";
-            // reset the variables
             resetCalculator();
             return;
         }
@@ -207,7 +207,7 @@ for (let i = 0; i < buttonArrayLength; i++) {
         //     return;
 
         // }
-        else if ( currentValue === "=" ) {
+        else if (currentValue === "=") {
             evaluateResult();
             console.log(evaluateResult)
             borderColor();
