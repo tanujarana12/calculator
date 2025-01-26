@@ -57,6 +57,14 @@ let percentage = function (a, b) {
     c = (a / 100) * b;
     return c;
 }
+
+let symbolObject = {
+    '+': addition,
+    '-': substraction,
+    '*': multiply,
+    '/': division,
+    '%': percentage
+}
 // if (currentValue === "=") {
 //     evaluateResult();
 //     borderColor();
@@ -96,20 +104,26 @@ let evaluateResult = function () {
         // return;
     }
     else {
-        if (performAction === "+") {
-            result = addition(firstValue, secondValue);
-        }
-        else if (performAction === "-") {
-            result = substraction(firstValue, secondValue);
-        }
-        else if (performAction === "*") {
-            result = multiply(firstValue, secondValue);
-        }
-        else if (performAction === "/") {
-            result = division(firstValue, secondValue);
-        }
-        else if (performAction === "%") {
-            result = percentage(firstValue, secondValue);
+        // if (performAction === "+") {
+        //     result = addition(firstValue, secondValue);
+        // }
+        // else if (performAction === "-") {
+        //     result = substraction(firstValue, secondValue);
+        // }
+        // else if (performAction === "*") {
+        //     result = multiply(firstValue, secondValue);
+        // }
+        // else if (performAction === "/") {
+        //     result = division(firstValue, secondValue);
+        // }
+        // else if (performAction === "%") {
+        //     result = percentage(firstValue, secondValue);
+        // }
+
+        if (isValueExist(performActionSymbols, performAction)) {
+            const evaluationFunction = symbolObject[performAction];
+            console.log('evaluationfunction', evaluationFunction);
+            result = evaluationFunction(firstValue, secondValue);
         }
     }
 
